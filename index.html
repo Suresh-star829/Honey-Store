@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Golden Hive — Pure Artisan Honey</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --honey: #D4860A;
+    --honey-light: #F5C842;
+    --honey-pale: #FFF8E7;
+    --honey-deep: #8B4E00;
+    --cream: #FAF3E0;
+    --dark: #2C1A00;
+    --text: #3D2800;
+    --muted: #7A5C30;
+    --white: #FFFFFF;
+    --shadow: rgba(180, 100, 0, 0.15);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(250, 243, 224, 0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(212, 134, 10, 0.2);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--honey-deep); font-weight: 700; text-decoration: none; letter-spacing: -0.5px; }
+  .nav-logo span { color: var(--honey); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--muted); font-size: 0.9rem; font-weight: 400; letter-spacing: 0.5px; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--honey); }
+  .nav-cart {
+    background: var(--honey); color: white; border: none; cursor: pointer;
+    padding: 0.5rem 1.25rem; border-radius: 2rem; font-size: 0.85rem;
+    font-family: 'Lato', sans-serif; font-weight: 700; letter-spacing: 0.5px;
+    transition: background 0.2s, transform 0.15s;
+    display: flex; align-items: center; gap: 0.4rem;
+  }
+  .nav-cart:hover { background: var(--honey-deep); transform: translateY(-1px); }
+  .cart-count { background: white; color: var(--honey); border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(160deg, #FFF8E7 0%, #FAF0CC 40%, #F5E0A0 100%);
+    display: flex; align-items: center;
+    padding: 100px 2rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -80px; right: -80px;
+    width: 500px; height: 500px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,200,66,0.3) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '🍯';
+    position: absolute; right: 8%; top: 50%; transform: translateY(-50%);
+    font-size: 14rem; opacity: 0.15; pointer-events: none;
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float { 0%,100% { transform: translateY(-50%) rotate(-5deg); } 50% { transform: translateY(-55%) rotate(5deg); } }
+
+  .hero-content { max-width: 600px; position: relative; z-index: 1; }
+  .hero-tag { display: inline-block; background: rgba(212,134,10,0.12); color: var(--honey); padding: 0.35rem 1rem; border-radius: 2rem; font-size: 0.8rem; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700; margin-bottom: 1.5rem; border: 1px solid rgba(212,134,10,0.3); }
+  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.8rem, 5vw, 4.5rem); line-height: 1.1; color: var(--dark); font-weight: 700; margin-bottom: 1.2rem; }
+  .hero h1 em { color: var(--honey); font-style: italic; }
+  .hero p { font-size: 1.1rem; color: var(--muted); line-height: 1.8; margin-bottom: 2.5rem; font-weight: 300; max-width: 480px; }
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--honey); color: white; text-decoration: none;
+    padding: 0.9rem 2rem; border-radius: 3rem; font-weight: 700; font-size: 0.95rem;
+    letter-spacing: 0.5px; transition: all 0.2s; display: inline-block;
+    box-shadow: 0 4px 20px rgba(212,134,10,0.4);
+  }
+  .btn-primary:hover { background: var(--honey-deep); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(212,134,10,0.5); }
+  .btn-secondary {
+    background: transparent; color: var(--honey-deep); text-decoration: none;
+    padding: 0.9rem 2rem; border-radius: 3rem; font-weight: 700; font-size: 0.95rem;
+    letter-spacing: 0.5px; transition: all 0.2s; display: inline-block;
+    border: 2px solid var(--honey-deep);
+  }
+  .btn-secondary:hover { background: var(--honey-deep); color: white; }
+
+  .hero-stats { display: flex; gap: 2.5rem; margin-top: 3rem; padding-top: 2.5rem; border-top: 1px solid rgba(212,134,10,0.2); }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--honey-deep); }
+  .stat-label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 0.2rem; }
+
+  /* ── SECTION TITLE ── */
+  section { padding: 5rem 2rem; }
+  .section-header { text-align: center; margin-bottom: 3.5rem; }
+  .section-tag { display: inline-block; color: var(--honey); font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; margin-bottom: 0.75rem; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3vw, 2.8rem); color: var(--dark); font-weight: 700; line-height: 1.2; }
+  .section-sub { color: var(--muted); font-size: 1rem; margin-top: 0.75rem; font-weight: 300; max-width: 500px; margin-left: auto; margin-right: auto; }
+
+  /* ── FEATURES STRIP ── */
+  .features { background: var(--honey-deep); padding: 3rem 2rem; }
+  .features-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; }
+  .feature-item { display: flex; align-items: center; gap: 1rem; color: rgba(255,255,255,0.9); }
+  .feature-icon { font-size: 2rem; flex-shrink: 0; }
+  .feature-text strong { display: block; font-size: 0.95rem; font-weight: 700; color: white; }
+  .feature-text span { font-size: 0.8rem; color: rgba(255,255,255,0.65); }
+
+  /* ── PRODUCTS ── */
+  #products { background: var(--white); max-width: unset; }
+  .products-wrapper { max-width: 1200px; margin: 0 auto; }
+  .filter-bar { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3rem; }
+  .filter-btn { background: transparent; border: 1.5px solid var(--honey); color: var(--honey); padding: 0.5rem 1.25rem; border-radius: 2rem; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.2s; font-family: 'Lato', sans-serif; }
+  .filter-btn.active, .filter-btn:hover { background: var(--honey); color: white; }
+
+  .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 2rem; }
+  .product-card {
+    background: var(--cream); border-radius: 1.2rem; overflow: hidden;
+    transition: transform 0.25s, box-shadow 0.25s; cursor: pointer;
+    border: 1px solid rgba(212,134,10,0.1);
+  }
+  .product-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px var(--shadow); }
+  .product-img { height: 200px; display: flex; align-items: center; justify-content: center; font-size: 5rem; background: linear-gradient(135deg, #FFF8E7, #F5E5A0); position: relative; }
+  .badge { position: absolute; top: 12px; left: 12px; background: var(--honey); color: white; font-size: 0.7rem; font-weight: 700; padding: 0.25rem 0.65rem; border-radius: 1rem; letter-spacing: 0.5px; text-transform: uppercase; }
+  .badge.organic { background: #3B6D11; }
+  .badge.bestseller { background: var(--honey-deep); }
+  .product-info { padding: 1.25rem; }
+  .product-name { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 600; color: var(--dark); margin-bottom: 0.35rem; }
+  .product-origin { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.75rem; }
+  .product-rating { display: flex; align-items: center; gap: 0.35rem; font-size: 0.8rem; margin-bottom: 1rem; }
+  .stars { color: var(--honey-light); letter-spacing: 1px; }
+  .rating-count { color: var(--muted); }
+  .product-footer { display: flex; align-items: center; justify-content: space-between; }
+  .product-price { font-size: 1.4rem; font-weight: 700; color: var(--honey-deep); font-family: 'Playfair Display', serif; }
+  .product-price span { font-size: 0.8rem; color: var(--muted); font-family: 'Lato', sans-serif; font-weight: 400; }
+  .add-btn {
+    background: var(--honey); color: white; border: none; cursor: pointer;
+    width: 38px; height: 38px; border-radius: 50%; font-size: 1.4rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s; font-family: 'Lato', sans-serif;
+  }
+  .add-btn:hover { background: var(--honey-deep); transform: scale(1.1); }
+  .add-btn.added { background: #3B6D11; }
+
+  /* ── ABOUT ── */
+  #about { background: var(--honey-pale); }
+  .about-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  .about-visual { text-align: center; font-size: 10rem; position: relative; }
+  .about-visual::after { content: ''; position: absolute; inset: 20%; border-radius: 50%; background: radial-gradient(circle, rgba(245,200,66,0.25), transparent 70%); pointer-events: none; }
+  .about-text .section-header { text-align: left; margin-bottom: 1.5rem; }
+  .about-text .section-title { font-size: 2rem; }
+  .about-text p { color: var(--muted); line-height: 1.9; margin-bottom: 1.25rem; font-size: 0.95rem; }
+  .about-list { list-style: none; margin: 1.5rem 0 2rem; }
+  .about-list li { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; font-size: 0.95rem; color: var(--text); }
+  .about-list li::before { content: '✦'; color: var(--honey); font-size: 0.7rem; flex-shrink: 0; }
+
+  /* ── TESTIMONIALS ── */
+  #testimonials { background: var(--white); }
+  .testimonials-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+  .testimonial-card { background: var(--cream); padding: 2rem; border-radius: 1.2rem; border: 1px solid rgba(212,134,10,0.12); position: relative; }
+  .testimonial-card::before { content: '"'; position: absolute; top: 1rem; right: 1.5rem; font-family: 'Playfair Display', serif; font-size: 5rem; color: rgba(212,134,10,0.15); line-height: 1; }
+  .testimonial-text { font-size: 0.95rem; color: var(--muted); line-height: 1.8; margin-bottom: 1.5rem; font-style: italic; }
+  .testimonial-author { display: flex; align-items: center; gap: 0.75rem; }
+  .author-avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--honey); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 0.9rem; flex-shrink: 0; }
+  .author-name { font-weight: 700; font-size: 0.9rem; color: var(--dark); }
+  .author-loc { font-size: 0.8rem; color: var(--muted); }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--honey-deep); }
+  .contact-inner { max-width: 800px; margin: 0 auto; text-align: center; }
+  #contact .section-tag { color: var(--honey-light); }
+  #contact .section-title { color: white; }
+  #contact .section-sub { color: rgba(255,255,255,0.65); }
+  .contact-form { margin-top: 2.5rem; display: grid; gap: 1rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-input {
+    width: 100%; padding: 0.85rem 1.25rem; border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 0.6rem; background: rgba(255,255,255,0.1); color: white;
+    font-family: 'Lato', sans-serif; font-size: 0.95rem; outline: none; transition: border 0.2s;
+  }
+  .form-input::placeholder { color: rgba(255,255,255,0.4); }
+  .form-input:focus { border-color: var(--honey-light); }
+  textarea.form-input { resize: vertical; min-height: 110px; }
+  .submit-btn {
+    background: var(--honey-light); color: var(--dark); border: none; cursor: pointer;
+    padding: 0.9rem 2.5rem; border-radius: 3rem; font-size: 0.95rem; font-weight: 700;
+    font-family: 'Lato', sans-serif; transition: all 0.2s; align-self: start; margin: 0 auto;
+  }
+  .submit-btn:hover { background: white; transform: translateY(-2px); }
+
+  /* ── FOOTER ── */
+  footer { background: var(--dark); color: rgba(255,255,255,0.55); padding: 3rem 2rem 1.5rem; text-align: center; }
+  .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--honey-light); margin-bottom: 1rem; }
+  .footer-links { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin: 1.5rem 0; }
+  .footer-links a { color: rgba(255,255,255,0.45); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--honey-light); }
+  .footer-copy { font-size: 0.8rem; color: rgba(255,255,255,0.3); margin-top: 1.5rem; }
+
+  /* ── CART SIDEBAR ── */
+  .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+  .cart-overlay.open { opacity: 1; pointer-events: all; }
+  .cart-drawer {
+    position: fixed; top: 0; right: -420px; width: 400px; max-width: 90vw; height: 100vh;
+    background: white; z-index: 201; padding: 2rem; display: flex; flex-direction: column;
+    transition: right 0.35s cubic-bezier(.4,0,.2,1); box-shadow: -4px 0 30px rgba(0,0,0,0.15);
+  }
+  .cart-drawer.open { right: 0; }
+  .cart-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(212,134,10,0.15); }
+  .cart-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--dark); }
+  .close-btn { background: none; border: none; cursor: pointer; font-size: 1.5rem; color: var(--muted); line-height: 1; padding: 0; }
+  .cart-items { flex: 1; overflow-y: auto; }
+  .cart-item { display: flex; align-items: center; gap: 1rem; padding: 0.85rem 0; border-bottom: 1px solid rgba(212,134,10,0.08); }
+  .cart-item-emoji { font-size: 2.2rem; }
+  .cart-item-info { flex: 1; }
+  .cart-item-name { font-weight: 700; font-size: 0.9rem; color: var(--dark); }
+  .cart-item-price { font-size: 0.85rem; color: var(--muted); }
+  .cart-item-qty { display: flex; align-items: center; gap: 0.5rem; }
+  .qty-btn { background: var(--cream); border: 1px solid rgba(212,134,10,0.25); cursor: pointer; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; color: var(--honey-deep); transition: all 0.15s; }
+  .qty-btn:hover { background: var(--honey); color: white; border-color: var(--honey); }
+  .qty-num { font-size: 0.85rem; font-weight: 700; min-width: 20px; text-align: center; }
+  .empty-cart { text-align: center; color: var(--muted); padding: 3rem 0; }
+  .empty-cart-emoji { font-size: 3rem; margin-bottom: 1rem; }
+  .cart-footer { padding-top: 1rem; border-top: 1px solid rgba(212,134,10,0.15); }
+  .cart-total { display: flex; justify-content: space-between; font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--dark); font-weight: 700; margin-bottom: 1rem; }
+  .checkout-btn { width: 100%; background: var(--honey); color: white; border: none; cursor: pointer; padding: 1rem; border-radius: 3rem; font-size: 0.95rem; font-weight: 700; font-family: 'Lato', sans-serif; transition: all 0.2s; }
+  .checkout-btn:hover { background: var(--honey-deep); }
+
+  /* ── NOTIFICATION ── */
+  .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--dark); color: white; padding: 0.75rem 1.5rem; border-radius: 3rem; font-size: 0.85rem; font-weight: 700; z-index: 300; transition: transform 0.3s; white-space: nowrap; }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hero::after { font-size: 8rem; opacity: 0.08; right: 1rem; }
+    .form-row { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .about-visual { font-size: 6rem; }
+    .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Golden<span>Hive</span></a>
+  <ul class="nav-links">
+    <li><a href="#products">Shop</a></li>
+    <li><a href="#about">Our Story</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cart" onclick="toggleCart()">
+    🛒 Cart <span class="cart-count" id="cartCount">0</span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-content">
+    <div class="hero-tag">🐝 100% Pure &amp; Natural</div>
+    <h1>From the <em>Hive</em> to Your Home</h1>
+    <p>Handcrafted artisan honey sourced from pristine meadows. No preservatives, no additives — just pure liquid gold the way nature intended.</p>
+    <div class="hero-cta">
+      <a href="#products" class="btn-primary">Shop Now</a>
+      <a href="#about" class="btn-secondary">Our Story</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-num">12+</div><div class="stat-label">Honey Varieties</div></div>
+      <div><div class="stat-num">4200+</div><div class="stat-label">Happy Customers</div></div>
+      <div><div class="stat-num">100%</div><div class="stat-label">Organic Certified</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES STRIP -->
+<div class="features">
+  <div class="features-grid">
+    <div class="feature-item"><div class="feature-icon">🌿</div><div class="feature-text"><strong>100% Organic</strong><span>No pesticides or additives</span></div></div>
+    <div class="feature-item"><div class="feature-icon">🚚</div><div class="feature-text"><strong>Free Delivery</strong><span>On orders above ₹999</span></div></div>
+    <div class="feature-item"><div class="feature-icon">🔬</div><div class="feature-text"><strong>Lab Tested</strong><span>Purity guaranteed</span></div></div>
+    <div class="feature-item"><div class="feature-icon">↩️</div><div class="feature-text"><strong>Easy Returns</strong><span>30-day hassle-free policy</span></div></div>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section id="products">
+  <div class="products-wrapper">
+    <div class="section-header">
+      <div class="section-tag">Our Collection</div>
+      <h2 class="section-title">Pure Honey Varieties</h2>
+      <p class="section-sub">Each jar carries the soul of its source — wild forests, alpine meadows, and sun-drenched orchards.</p>
+    </div>
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterProducts('all', this)">All</button>
+      <button class="filter-btn" onclick="filterProducts('raw', this)">Raw Honey</button>
+      <button class="filter-btn" onclick="filterProducts('infused', this)">Infused</button>
+      <button class="filter-btn" onclick="filterProducts('specialty', this)">Specialty</button>
+    </div>
+    <div class="products-grid" id="productsGrid"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-visual">🍯</div>
+    <div class="about-text">
+      <div class="section-header">
+        <div class="section-tag">Our Story</div>
+        <h2 class="section-title">Where Every Drop Tells a Story</h2>
+      </div>
+      <p>Founded in 2015 deep in the Nilgiri hills, GoldenHive began with a single idea: honest honey, harvested with respect for bees and nature alike.</p>
+      <p>Our beekeepers follow traditional methods passed down through generations, ensuring the bees thrive and every jar is pure, potent, and full of life.</p>
+      <ul class="about-list">
+        <li>Directly sourced from certified apiaries across India</li>
+        <li>Cold-extracted to preserve natural enzymes & pollen</li>
+        <li>FSSAI certified & internationally lab-tested</li>
+        <li>Bee-friendly, sustainable farming practices</li>
+        <li>Zero added sugar, no artificial preservatives</li>
+      </ul>
+      <a href="#contact" class="btn-primary">Get in Touch</a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-header">
+    <div class="section-tag">Customer Love</div>
+    <h2 class="section-title">What People Are Saying</h2>
+    <p class="section-sub">Real reviews from real honey lovers across India.</p>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <p class="testimonial-text">I've tried many brands but GoldenHive's Wildflower honey is truly something else. You can actually taste the difference — it's rich, floral, and absolutely not like anything from a supermarket shelf.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">PR</div>
+        <div><div class="author-name">Priya Ramesh</div><div class="author-loc">Bangalore, Karnataka</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <p class="testimonial-text">The Turmeric Infused honey is incredible for immunity. My whole family uses it every morning now. Fast shipping and the packaging is so premium — it makes a wonderful gift too!</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">AK</div>
+        <div><div class="author-name">Arjun Kumar</div><div class="author-loc">Hyderabad, Telangana</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <p class="testimonial-text">As someone who bakes professionally, raw honey quality matters enormously to me. The Sidr honey has transformed my pastries. Thick, aromatic, with zero processed taste. Highly recommend!</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">MN</div>
+        <div><div class="author-name">Maya Nair</div><div class="author-loc">Kochi, Kerala</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="section-header">
+      <div class="section-tag">Reach Out</div>
+      <h2 class="section-title">We'd Love to Hear From You</h2>
+      <p class="section-sub">Bulk orders, partnerships, or just a hello — drop us a message.</p>
+    </div>
+    <form class="contact-form" onsubmit="submitForm(event)">
+      <div class="form-row">
+        <input type="text" class="form-input" placeholder="Your Name" required>
+        <input type="email" class="form-input" placeholder="Email Address" required>
+      </div>
+      <input type="text" class="form-input" placeholder="Subject">
+      <textarea class="form-input" placeholder="Your message..."></textarea>
+      <button type="submit" class="submit-btn">Send Message 🍯</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">GoldenHive</div>
+  <p style="font-size:0.85rem;">Pure artisan honey, crafted with love by nature's most dedicated workers.</p>
+  <div class="footer-links">
+    <a href="#home">Home</a>
+    <a href="#products">Shop</a>
+    <a href="#about">About</a>
+    <a href="#testimonials">Reviews</a>
+    <a href="#contact">Contact</a>
+    <a href="#">Privacy Policy</a>
+  </div>
+  <div class="footer-copy">© 2025 GoldenHive. All rights reserved. Made with 🐝 in India.</div>
+</footer>
+
+<!-- CART OVERLAY & DRAWER -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <h2 class="cart-title">🛒 Your Cart</h2>
+    <button class="close-btn" onclick="toggleCart()">×</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer" id="cartFooter" style="display:none;">
+    <div class="cart-total"><span>Total</span><span id="cartTotal">₹0</span></div>
+    <button class="checkout-btn" onclick="checkout()">Proceed to Checkout →</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+const products = [
+  { id:1, name:"Wildflower Honey",    emoji:"🌸", origin:"Coorg, Karnataka",  price:549,  rating:4.8, reviews:312, category:"raw",       badge:"bestseller", weight:"500g" },
+  { id:2, name:"Acacia Honey",        emoji:"🌿", origin:"Himachal Pradesh",  price:699,  rating:4.9, reviews:198, category:"raw",       badge:"organic",    weight:"500g" },
+  { id:3, name:"Turmeric Infused",    emoji:"💛", origin:"Nilgiri Hills",     price:649,  rating:4.7, reviews:245, category:"infused",   badge:"",           weight:"250g" },
+  { id:4, name:"Cinnamon &amp; Ginger",   emoji:"🟤", origin:"Spice Gardens, Kerala", price:599, rating:4.6, reviews:167, category:"infused", badge:"",      weight:"250g" },
+  { id:5, name:"Sidr (Wild Jujube)",  emoji:"🍯", origin:"Rajasthan Forests", price:1299, rating:5.0, reviews:89,  category:"specialty", badge:"organic",    weight:"500g" },
+  { id:6, name:"Manuka Style Honey",  emoji:"🌺", origin:"Ooty Highlands",    price:999,  rating:4.8, reviews:134, category:"specialty", badge:"",           weight:"250g" },
+  { id:7, name:"Jamun Honey",         emoji:"🫐", origin:"Madhya Pradesh",    price:749,  rating:4.7, reviews:203, category:"raw",       badge:"organic",    weight:"500g" },
+  { id:8, name:"Garlic Infused",      emoji:"🧄", origin:"Maharashtra",       price:499,  rating:4.5, reviews:156, category:"infused",   badge:"",           weight:"250g" },
+];
+
+let cart = [];
+let activeFilter = 'all';
+
+function renderProducts(filter) {
+  const grid = document.getElementById('productsGrid');
+  const filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
+  grid.innerHTML = filtered.map(p => {
+    const stars = '★'.repeat(Math.floor(p.rating)) + (p.rating % 1 >= 0.5 ? '½' : '');
+    const badgeHTML = p.badge ? `<div class="badge ${p.badge}">${p.badge === 'bestseller' ? '🔥 Bestseller' : '🌿 Organic'}</div>` : '';
+    const inCart = cart.find(c => c.id === p.id);
+    return `<div class="product-card" data-id="${p.id}">
+      <div class="product-img">${p.emoji}${badgeHTML}</div>
+      <div class="product-info">
+        <div class="product-name">${p.name}</div>
+        <div class="product-origin">📍 ${p.origin} · ${p.weight}</div>
+        <div class="product-rating"><span class="stars">${stars}</span><span class="rating-count">${p.rating} (${p.reviews})</span></div>
+        <div class="product-footer">
+          <div class="product-price">₹${p.price}<span>/jar</span></div>
+          <button class="add-btn ${inCart ? 'added' : ''}" onclick="addToCart(${p.id})" title="Add to cart">${inCart ? '✓' : '+'}</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function filterProducts(cat, btn) {
+  activeFilter = cat;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderProducts(cat);
+}
+
+function addToCart(id) {
+  const product = products.find(p => p.id === id);
+  const existing = cart.find(c => c.id === id);
+  if (existing) { existing.qty++; }
+  else { cart.push({ ...product, qty: 1 }); }
+  updateCartUI();
+  renderProducts(activeFilter);
+  showToast(`${product.emoji} ${product.name} added to cart!`);
+}
+
+function updateCartUI() {
+  const total = cart.reduce((s, i) => s + i.qty, 0);
+  document.getElementById('cartCount').textContent = total;
+  const itemsEl = document.getElementById('cartItems');
+  const footerEl = document.getElementById('cartFooter');
+  if (cart.length === 0) {
+    itemsEl.innerHTML = '<div class="empty-cart"><div class="empty-cart-emoji">🍯</div><p>Your cart is empty.<br>Discover our pure honey varieties!</p></div>';
+    footerEl.style.display = 'none';
+  } else {
+    itemsEl.innerHTML = cart.map(item => `
+      <div class="cart-item">
+        <div class="cart-item-emoji">${item.emoji}</div>
+        <div class="cart-item-info"><div class="cart-item-name">${item.name}</div><div class="cart-item-price">₹${item.price} · ${item.weight}</div></div>
+        <div class="cart-item-qty">
+          <button class="qty-btn" onclick="changeQty(${item.id}, -1)">−</button>
+          <span class="qty-num">${item.qty}</span>
+          <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+        </div>
+      </div>`).join('');
+    const cartTotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    document.getElementById('cartTotal').textContent = '₹' + cartTotal.toLocaleString('en-IN');
+    footerEl.style.display = 'block';
+  }
+}
+
+function changeQty(id, delta) {
+  const item = cart.find(c => c.id === id);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) cart = cart.filter(c => c.id !== id);
+  updateCartUI();
+  renderProducts(activeFilter);
+}
+
+function toggleCart() {
+  document.getElementById('cartOverlay').classList.toggle('open');
+  document.getElementById('cartDrawer').classList.toggle('open');
+}
+
+function checkout() {
+  showToast('🎉 Order placed! Thank you for choosing GoldenHive.');
+  cart = [];
+  updateCartUI();
+  toggleCart();
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+function submitForm(e) {
+  e.preventDefault();
+  showToast('✉️ Message sent! We\'ll get back to you soon.');
+  e.target.reset();
+}
+
+renderProducts('all');
+updateCartUI();
+</script>
+</body>
+</html>
